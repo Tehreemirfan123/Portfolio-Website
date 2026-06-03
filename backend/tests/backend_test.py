@@ -83,24 +83,23 @@ class TestGithubProjects:
 
 # ---------- Contact Form ----------
 class TestContactForm:
-    def test_contact_send_mock_success(self, session, mongo_db):
+    def test_contact_send_real_email_via_resend(self, session, mongo_db):
+        """E2E: send a real email via Resend; expect success=True, mock=False."""
         unique = uuid.uuid4().hex[:8]
         payload = {
-            "name": f"TEST_User_{unique}",
-            "email": f"test_{unique}@example.com",
-            "subject": f"TEST_Subject_{unique}",
-            "message": "This is a test message from backend_test.py"
+            "name": "Portfolio Test",
+            "email": "test@example.com",
+            "subject": f"E2E Test {unique}",
+            "message": "Testing end-to-end email delivery"
         }
-        r = session.post(f"{API}/contact/send", json=payload)
+        r = session.post(f"{API}/contact/send", json=payload, timeout=30)
         assert r.status_code == 200, r.text
         data = r.json()
 
-        # SMTP not configured => mock=True, success=False per email_service.py
-        assert "success" in data
-        assert "message" in data
-        assert "mock" in data
-        assert data["mock"] is True, f"Expected mock=True when SMTP not configured, got: {data}"
-        assert data["success"] is False
+        assert "success" in data and "message" in data
+        # Resend is configured => mock should be False, success True
+        assert data.get("mock", False) is False, f"Expected mock=False with Resend configured, got: {data}"
+        assert data["success"] is True, f"Expected success=True with Resend configured, got: {data}"
         assert isinstance(data["message"], str) and len(data["message"]) > 0
 
         # Verify persistence
@@ -111,7 +110,7 @@ class TestContactForm:
         assert doc["email"] == payload["email"]
         assert doc["message"] == payload["message"]
         assert "timestamp" in doc
-        assert doc.get("email_sent") is False  # because mock mode
+        assert doc.get("email_sent") is True  # real email sent
 
         # Cleanup
         mongo_db.contact_submissions.delete_many({"subject": payload["subject"]})

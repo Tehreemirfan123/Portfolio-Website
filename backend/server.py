@@ -95,7 +95,7 @@ async def get_github_projects():
 async def send_contact_email(contact_data: ContactFormData):
     """Send contact form email"""
     try:
-        result = email_service.send_contact_email(
+        result = await email_service.send_contact_email(
             name=contact_data.name,
             email=contact_data.email,
             subject=contact_data.subject,
