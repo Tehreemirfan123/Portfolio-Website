@@ -256,19 +256,16 @@ const HeroSection = () => {
                       </div>
                     </div>
                   )}
-                  
-                  {/* Subtle gradient overlay at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-25" />
-                  
-                  {/* Name badge at bottom */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1 }}
-                    className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
-                  >
-                    <p className="text-white font-semibold text-base whitespace-nowrap">{personalInfo.name}</p>
-                  </motion.div>
+                </motion.div>
+
+                {/* Name badge - positioned BELOW the circular image, not clipped */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 }}
+                  className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 z-40 px-8 py-3 bg-black/80 backdrop-blur-md rounded-full border border-cyan-500/40 shadow-2xl shadow-cyan-500/20"
+                >
+                  <p className="text-white font-semibold text-lg whitespace-nowrap">{personalInfo.name}</p>
                 </motion.div>
 
                 {/* Floating elements around the image */}

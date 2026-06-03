@@ -151,6 +151,10 @@ const ProjectsSection = () => {
           
           // Mark GitHub projects with source and filter out unwanted ones
           const excludedProjects = ['react-optimization-bootcamp', 'codsoft'];
+          
+          // Helper function to normalize names for comparison (removes spaces, hyphens, underscores)
+          const normalize = (str) => str.toLowerCase().replace(/[\s\-_]/g, '');
+          
           const githubProjects = data.projects
             .filter(proj => !excludedProjects.some(excluded => 
               proj.name.toLowerCase().includes(excluded)
@@ -171,11 +175,26 @@ const ProjectsSection = () => {
           const merged = [...resumeProjects];
           
           // Add GitHub projects that aren't already in resume projects
+          // Uses normalized comparison and keyword matching for accuracy
           githubProjects.forEach(ghProj => {
-            const exists = resumeProjects.some(rp => 
-              rp.title.toLowerCase().includes(ghProj.name.toLowerCase()) ||
-              ghProj.name.toLowerCase().includes(rp.title.toLowerCase())
-            );
+            const ghNormalized = normalize(ghProj.name);
+            
+            const exists = resumeProjects.some(rp => {
+              const rpNormalized = normalize(rp.title);
+              // Check normalized inclusion in either direction
+              if (rpNormalized.includes(ghNormalized) || ghNormalized.includes(rpNormalized)) {
+                return true;
+              }
+              // Check for shared significant keywords (4+ chars)
+              const rpKeywords = rpNormalized.match(/[a-z]+/g) || [];
+              const ghKeywords = ghNormalized.match(/[a-z]+/g) || [];
+              const sharedKeywords = rpKeywords.filter(k => 
+                k.length >= 4 && ghKeywords.some(g => g.includes(k) || k.includes(g))
+              );
+              return sharedKeywords.length >= 2 || 
+                (sharedKeywords.length === 1 && sharedKeywords[0].length >= 6);
+            });
+            
             if (!exists) {
               merged.push(ghProj);
             }
