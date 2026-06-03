@@ -64,30 +64,45 @@ const ContactSection = () => {
       label: 'Email',
       value: personalInfo.email,
       href: `mailto:${personalInfo.email}`,
-      color: 'from-cyan-500 to-blue-600'
+      color: 'from-cyan-500 to-blue-600',
+      external: false
     },
     {
       icon: Phone,
       label: 'Phone',
       value: personalInfo.phone,
       href: `tel:${personalInfo.phone}`,
-      color: 'from-blue-500 to-violet-600'
+      color: 'from-blue-500 to-violet-600',
+      external: false
     },
     {
       icon: Linkedin,
       label: 'LinkedIn',
       value: 'Connect on LinkedIn',
       href: personalInfo.linkedin,
-      color: 'from-violet-500 to-purple-600'
+      color: 'from-violet-500 to-purple-600',
+      external: true
     },
     {
       icon: Github,
       label: 'GitHub',
       value: 'View GitHub Profile',
       href: personalInfo.github,
-      color: 'from-gray-600 to-gray-800'
+      color: 'from-gray-600 to-gray-800',
+      external: true
     }
   ];
+
+  const handleEmailClick = (e, email) => {
+    // Try mailto first; if it fails (no mail client), copy to clipboard
+    const mailtoLink = `mailto:${email}`;
+    try {
+      window.location.href = mailtoLink;
+    } catch (err) {
+      // Fallback: copy email to clipboard
+      navigator.clipboard?.writeText(email);
+    }
+  };
 
   return (
     <section id="contact" className="relative py-32 bg-gradient-to-b from-black via-gray-950 to-black overflow-hidden">
@@ -129,8 +144,8 @@ const ContactSection = () => {
                 <motion.a
                   key={index}
                   href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  data-testid={`contact-link-${link.label.toLowerCase()}`}
                   initial={{ opacity: 0, x: -30 }}
                   animate={inView ? { opacity: 1, x: 0 } : {}}
                   transition={{ delay: 0.4 + index * 0.1 }}
