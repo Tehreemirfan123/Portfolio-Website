@@ -7,7 +7,8 @@ export const personalInfo = {
   phone: "+92 337 3307786",
   linkedin: "https://www.linkedin.com/in/tehreem-irfan-8a3504274/",
   github: "https://github.com/Tehreemirfan123",
-  resumeUrl: "https://customer-assets.emergentagent.com/job_ae8a9041-4f07-46a4-829c-c2d7adac6710/artifacts/3u9foxbt_AI_ML_Engineer_Resume.pdf"
+  resumeUrl: "https://customer-assets.emergentagent.com/job_ae8a9041-4f07-46a4-829c-c2d7adac6710/artifacts/3u9foxbt_AI_ML_Engineer_Resume.pdf",
+  profileImage: "" // Replace with your professional photo URL
 };
 
 export const heroStates = [

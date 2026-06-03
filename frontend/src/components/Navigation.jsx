@@ -52,7 +52,7 @@ const Navigation = () => {
               className="text-2xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent"
               whileHover={{ scale: 1.05 }}
             >
-              {personalInfo.name.split(' ')[0]}
+              {personalInfo.name}
             </motion.a>
 
             {/* Desktop Navigation */}

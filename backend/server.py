@@ -1,14 +1,16 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List
 import uuid
 from datetime import datetime, timezone
+from services.github_service import github_service
+from services.email_service import email_service
 
 
 ROOT_DIR = Path(__file__).parent
@@ -36,6 +38,17 @@ class StatusCheck(BaseModel):
 
 class StatusCheckCreate(BaseModel):
     client_name: str
+
+class ContactFormData(BaseModel):
+    name: str
+    email: EmailStr
+    subject: str
+    message: str
+
+class ContactResponse(BaseModel):
+    success: bool
+    message: str
+    mock: bool = False
 
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
@@ -65,6 +78,46 @@ async def get_status_checks():
             check['timestamp'] = datetime.fromisoformat(check['timestamp'])
     
     return status_checks
+
+# GitHub API endpoints
+@api_router.get("/github/projects")
+async def get_github_projects():
+    """Fetch GitHub repositories"""
+    try:
+        projects = github_service.get_featured_projects(limit=20)
+        return {"projects": projects}
+    except Exception as e:
+        logger.error(f"Error fetching GitHub projects: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to fetch GitHub projects")
+
+# Contact form endpoint
+@api_router.post("/contact/send", response_model=ContactResponse)
+async def send_contact_email(contact_data: ContactFormData):
+    """Send contact form email"""
+    try:
+        result = email_service.send_contact_email(
+            name=contact_data.name,
+            email=contact_data.email,
+            subject=contact_data.subject,
+            message=contact_data.message
+        )
+        
+        # Store contact submission in database
+        contact_doc = {
+            "name": contact_data.name,
+            "email": contact_data.email,
+            "subject": contact_data.subject,
+            "message": contact_data.message,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "email_sent": result.get('success', False)
+        }
+        await db.contact_submissions.insert_one(contact_doc)
+        
+        return ContactResponse(**result)
+        
+    except Exception as e:
+        logger.error(f"Error processing contact form: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to process contact form")
 
 # Include the router in the main app
 app.include_router(api_router)
