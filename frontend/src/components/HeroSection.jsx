@@ -225,29 +225,40 @@ const HeroSection = () => {
                   className="relative rounded-full overflow-hidden border-4 border-black bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"
                   style={{ width: '400px', height: '400px' }}
                 >
-                  {/* Glass-morphism overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 backdrop-blur-[2px] z-10" />
+                  {/* Profile Image with theme adjustments */}
+                  {personalInfo.profileImage && (
+                    <img
+                      src={personalInfo.profileImage}
+                      alt={personalInfo.name}
+                      className="w-full h-full object-cover relative z-10"
+                      style={{
+                        filter: 'contrast(1.05) saturate(1.1) brightness(0.95)',
+                      }}
+                    />
+                  )}
                   
-                  {/* Profile Image with fallback to initials */}
-                  <img
-                    src={personalInfo.profileImage}
-                    alt={personalInfo.name}
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.style.display = 'none'; }}
-                  />
+                  {/* Theme color overlay for cohesion */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-600/15 z-20 pointer-events-none mix-blend-overlay" />
+                  
+                  {/* Subtle vignette */}
+                  <div className="absolute inset-0 z-20 pointer-events-none" style={{
+                    boxShadow: 'inset 0 0 80px 20px rgba(0, 0, 0, 0.4)'
+                  }} />
                   
                   {/* Initials placeholder (shown if no image) */}
-                  <div className="absolute inset-0 flex items-center justify-center z-0">
-                    <div className="text-center">
-                      <div className="text-9xl font-bold bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">
-                        TI
+                  {!personalInfo.profileImage && (
+                    <div className="absolute inset-0 flex items-center justify-center z-0">
+                      <div className="text-center">
+                        <div className="text-9xl font-bold bg-gradient-to-br from-cyan-400 via-blue-500 to-violet-500 bg-clip-text text-transparent">
+                          TI
+                        </div>
+                        <p className="text-gray-400 text-sm mt-2 px-8">Add your photo here</p>
                       </div>
-                      <p className="text-gray-400 text-sm mt-2 px-8">Add your photo here</p>
                     </div>
-                  </div>
+                  )}
                   
                   {/* Subtle gradient overlay at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/60 to-transparent z-20" />
+                  <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/80 via-black/30 to-transparent z-25" />
                   
                   {/* Name badge at bottom */}
                   <motion.div
@@ -256,7 +267,7 @@ const HeroSection = () => {
                     transition={{ delay: 1 }}
                     className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-30 px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20"
                   >
-                    <p className="text-white font-semibold text-lg whitespace-nowrap">{personalInfo.name}</p>
+                    <p className="text-white font-semibold text-base whitespace-nowrap">{personalInfo.name}</p>
                   </motion.div>
                 </motion.div>
 

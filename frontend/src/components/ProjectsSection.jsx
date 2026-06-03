@@ -149,18 +149,23 @@ const ProjectsSection = () => {
         if (response.ok) {
           const data = await response.json();
           
-          // Mark GitHub projects with source
-          const githubProjects = data.projects.map(proj => ({
-            ...proj,
-            source: 'github',
-            title: proj.name,
-            // Determine project type based on topics or language
-            type: proj.topics.includes('computer-vision') || proj.topics.includes('yolo') 
-              ? 'computer-vision' 
-              : proj.topics.includes('ai') || proj.topics.includes('machine-learning')
-              ? 'ai-ml'
-              : 'software'
-          }));
+          // Mark GitHub projects with source and filter out unwanted ones
+          const excludedProjects = ['react-optimization-bootcamp', 'codsoft'];
+          const githubProjects = data.projects
+            .filter(proj => !excludedProjects.some(excluded => 
+              proj.name.toLowerCase().includes(excluded)
+            ))
+            .map(proj => ({
+              ...proj,
+              source: 'github',
+              title: proj.name,
+              // Determine project type based on topics or language
+              type: proj.topics.includes('computer-vision') || proj.topics.includes('yolo') 
+                ? 'computer-vision' 
+                : proj.topics.includes('ai') || proj.topics.includes('machine-learning')
+                ? 'ai-ml'
+                : 'software'
+            }));
           
           // Merge resume projects with GitHub projects (resume projects first)
           const merged = [...resumeProjects];
