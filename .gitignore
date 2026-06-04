@@ -3,6 +3,7 @@
 .vscode/
 .emergent/
 yarn.lock
+frontend/build
 
 # Dependencies
 node_modules/
@@ -81,10 +82,21 @@ agenthub/agents/youtube/db
 
 # Build caches
 .cache/
-
 memory/test_credentials.md
 
 # Mobile development
 android-sdk/
 tests/
 test_reports/
+
+# Emergent generated files
+.emergent/
+backend/
+tests/
+
+# Emergent generated files
+.emergent/
+backend/
+tests/
+memory/
+test_result.md
