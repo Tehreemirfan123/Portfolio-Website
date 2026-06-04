@@ -86,17 +86,9 @@ memory/test_credentials.md
 
 # Mobile development
 android-sdk/
+
+# Emergent generated files
+.emergent/
 tests/
 test_reports/
-
-# Emergent generated files
-.emergent/
-backend/
-tests/
-
-# Emergent generated files
-.emergent/
-backend/
-tests/
-memory/
 test_result.md
