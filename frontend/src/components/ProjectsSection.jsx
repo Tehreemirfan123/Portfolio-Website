@@ -151,7 +151,12 @@ const ProjectsSection = () => {
           const data = await response.json();
 
           // Mark GitHub projects with source and filter out unwanted ones
-          const excludedProjects = ['react-optimization-bootcamp', 'codsoft', 'ppe_webapp_system', 'ppe-webapp-system'];
+          const excludedProjects = [
+            'react-optimization-bootcamp',
+            'codsoft',
+            'portfolio-website',
+            'portfolio'
+          ];
 
           // Helper function to normalize names for comparison (removes spaces, hyphens, underscores)
           const normalize = (str) => str.toLowerCase().replace(/[\s\-_]/g, '');
