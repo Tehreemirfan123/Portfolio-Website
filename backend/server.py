@@ -1,4 +1,5 @@
 from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi.responses import FileResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 # from motor.motor_asyncio import AsyncIOMotorClient
@@ -121,6 +122,25 @@ async def send_contact_email(contact_data: ContactFormData):
 
 # Include the router in the main app
 app.include_router(api_router)
+
+
+def get_frontend_index():
+    index_path = ROOT_DIR.parent / "frontend" / "build" / "index.html"
+    if not index_path.exists():
+        raise HTTPException(status_code=404, detail="Frontend build not found")
+    return FileResponse(index_path)
+
+
+@app.get("/")
+async def serve_frontend_root():
+    return get_frontend_index()
+
+
+@app.get("/{full_path:path}")
+async def serve_frontend_routes(full_path: str):
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+    return get_frontend_index()
 
 app.add_middleware(
     CORSMiddleware,
