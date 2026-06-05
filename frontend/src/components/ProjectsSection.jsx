@@ -4,7 +4,8 @@ import { useInView } from 'react-intersection-observer';
 import { Github, ExternalLink, TrendingUp, Star } from 'lucide-react';
 import { projects as resumeProjects } from '../mock';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+// const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 const ProjectCard = ({ project, index }) => {
   const [ref, inView] = useInView({
@@ -25,7 +26,7 @@ const ProjectCard = ({ project, index }) => {
       <div className="relative p-8 md:p-12 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm rounded-3xl border border-white/10 hover:border-cyan-500/50 transition-all duration-500 overflow-hidden">
         {/* Background glow on hover */}
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 to-blue-500/0 group-hover:from-cyan-500/10 group-hover:to-blue-500/10 transition-all duration-500" />
-        
+
         <div className="relative z-10">
           {/* Project Type Badge */}
           <motion.div
@@ -148,15 +149,15 @@ const ProjectsSection = () => {
         const response = await fetch(`${BACKEND_URL}/api/github/projects`);
         if (response.ok) {
           const data = await response.json();
-          
+
           // Mark GitHub projects with source and filter out unwanted ones
           const excludedProjects = ['react-optimization-bootcamp', 'codsoft', 'ppe_webapp_system', 'ppe-webapp-system'];
-          
+
           // Helper function to normalize names for comparison (removes spaces, hyphens, underscores)
           const normalize = (str) => str.toLowerCase().replace(/[\s\-_]/g, '');
-          
+
           const githubProjects = data.projects
-            .filter(proj => !excludedProjects.some(excluded => 
+            .filter(proj => !excludedProjects.some(excluded =>
               proj.name.toLowerCase().includes(excluded)
             ))
             .map(proj => ({
@@ -164,21 +165,21 @@ const ProjectsSection = () => {
               source: 'github',
               title: proj.name,
               // Determine project type based on topics or language
-              type: proj.topics.includes('computer-vision') || proj.topics.includes('yolo') 
-                ? 'computer-vision' 
+              type: proj.topics.includes('computer-vision') || proj.topics.includes('yolo')
+                ? 'computer-vision'
                 : proj.topics.includes('ai') || proj.topics.includes('machine-learning')
-                ? 'ai-ml'
-                : 'software'
+                  ? 'ai-ml'
+                  : 'software'
             }));
-          
+
           // Merge resume projects with GitHub projects (resume projects first)
           const merged = [...resumeProjects];
-          
+
           // Add GitHub projects that aren't already in resume projects
           // Uses normalized comparison and keyword matching for accuracy
           githubProjects.forEach(ghProj => {
             const ghNormalized = normalize(ghProj.name);
-            
+
             const exists = resumeProjects.some(rp => {
               const rpNormalized = normalize(rp.title);
               // Check normalized inclusion in either direction
@@ -188,18 +189,18 @@ const ProjectsSection = () => {
               // Check for shared significant keywords (4+ chars)
               const rpKeywords = rpNormalized.match(/[a-z]+/g) || [];
               const ghKeywords = ghNormalized.match(/[a-z]+/g) || [];
-              const sharedKeywords = rpKeywords.filter(k => 
+              const sharedKeywords = rpKeywords.filter(k =>
                 k.length >= 4 && ghKeywords.some(g => g.includes(k) || k.includes(g))
               );
-              return sharedKeywords.length >= 2 || 
+              return sharedKeywords.length >= 2 ||
                 (sharedKeywords.length === 1 && sharedKeywords[0].length >= 6);
             });
-            
+
             if (!exists) {
               merged.push(ghProj);
             }
           });
-          
+
           setAllProjects(merged);
         }
       } catch (error) {

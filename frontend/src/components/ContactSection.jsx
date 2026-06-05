@@ -33,7 +33,8 @@ const ContactSection = () => {
     setSubmitStatus(null);
 
     try {
-      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      // const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
       const response = await fetch(`${BACKEND_URL}/api/contact/send`, {
         method: 'POST',
         headers: {
@@ -137,7 +138,7 @@ const ContactSection = () => {
             className="space-y-6"
           >
             <h3 className="text-3xl font-bold text-white mb-8">Get In Touch</h3>
-            
+
             {contactLinks.map((link, index) => {
               const Icon = link.icon;
               return (
@@ -255,9 +256,8 @@ const ContactSection = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-3 ${
-                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                className={`w-full px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg transition-all duration-300 flex items-center justify-center gap-3 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
               >
                 {isSubmitting ? (
                   'Sending...'
