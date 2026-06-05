@@ -92,3 +92,9 @@ android-sdk/
 tests/
 test_reports/
 test_result.md
+.env.*
+*.env
+credentials.json
+*.key
+.credentials
+project.zip
