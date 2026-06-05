@@ -8,7 +8,7 @@ export const personalInfo = {
   linkedin: "https://www.linkedin.com/in/tehreem-irfan-8a3504274/",
   github: "https://github.com/Tehreemirfan123",
   // resumeUrl: "https://customer-assets.emergentagent.com/job_ae8a9041-4f07-46a4-829c-c2d7adac6710/artifacts/3u9foxbt_AI_ML_Engineer_Resume.pdf",
-  resumeUrl: "https://drive.google.com/file/d/12-r6mg5opvy1F480dxDPnpdBlcHAbiSF/view?usp=sharing",
+  resumeUrl: "https://drive.google.com/file/d/1KcB9tk1reilWYip0g_DEI8ajebPtC3eR/view?usp=sharing",
   // profileImage: "https://drive.google.com/file/d/1goAYKZRZbGErwoO-oEK1yijWL9TwMe1L/view?usp=sharing",
   profileImage: "https://customer-assets.emergentagent.com/job_tehreem-works/artifacts/mauh7c2l_PI.jpg" // Professional photo
 };
