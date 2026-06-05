@@ -154,6 +154,8 @@ const ProjectsSection = () => {
           const excludedProjects = [
             'react-optimization-bootcamp',
             'codsoft',
+            'ppe_webapp_system',
+            'ppe-webapp-system',
             'portfolio-website',
             'portfolio'
           ];
