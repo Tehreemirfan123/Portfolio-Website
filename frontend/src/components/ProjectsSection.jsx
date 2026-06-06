@@ -157,7 +157,8 @@ const ProjectsSection = () => {
             'ppe_webapp_system',
             'ppe-webapp-system',
             'portfolio-website',
-            'portfolio'
+            'portfolio',
+            'tehreemirfan123'
           ];
 
           // Helper function to normalize names for comparison (removes spaces, hyphens, underscores)

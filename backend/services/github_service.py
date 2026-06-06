@@ -40,6 +40,10 @@ class GitHubService:
             # Format and filter repositories
             formatted_repos = []
             for repo in repos:
+                # Skip GitHub profile README repo
+                if repo.get("name") == "Tehreemirfan123":
+                    continue
+                
                 # Skip forks unless they have significant stars
                 if repo.get('fork') and repo.get('stargazers_count', 0) < 5:
                     continue
