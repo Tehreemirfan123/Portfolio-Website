@@ -158,7 +158,8 @@ const ProjectsSection = () => {
             'ppe-webapp-system',
             'portfolio-website',
             'portfolio',
-            'tehreemirfan123'
+            'tehreemirfan123',
+            'DecodeLabs-Internship'
           ];
 
           // Helper function to normalize names for comparison (removes spaces, hyphens, underscores)
