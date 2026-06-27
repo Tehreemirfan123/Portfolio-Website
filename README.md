@@ -1,8 +1,39 @@
 # Tehreem Irfan - AI Engineer Portfolio
 
-A modern portfolio website showcasing work in Artificial Intelligence, Computer Vision, Agentic AI, Machine Learning, and Production AI Systems.
+## Overview
 
-The project includes a React frontend, a FastAPI backend, contact form email sending through Resend, and Vercel deployment configuration.
+This is my personal AI Engineer portfolio website built to showcase my projects, skills, and experience in:
+
+- Artificial Intelligence
+- Computer Vision
+- Agentic AI
+- Machine Learning
+- Full Stack Development
+
+The website features project showcases, GitHub integration, animated UI components, and a contact form powered by FastAPI and Resend.
+
+## Demo
+
+Portfolio Website:
+https://portfolio-one-amber-idvr98xn6k.vercel.app/
+
+## Screenshots
+
+![Home Page](screenshots/home.png)
+
+## Projects Section
+![Projects](screenshots/projects.png)
+
+### Contact Section
+![Contact](screenshots/contact.png)
+
+## Highlights
+
+- Built using React and FastAPI
+- Integrated GitHub project APIs
+- Implemented email communication with Resend
+- Configured serverless deployment on Vercel
+- Responsive and mobile-friendly UI
 
 ## Project Structure
 
