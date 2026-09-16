@@ -159,6 +159,7 @@ const ProjectsSection = () => {
             'portfolio-website',
             'portfolio',
             'tehreemirfan123',
+            'DecodeLabs-Internship',
             'DecodeLabs-Internship'
           ];
 
