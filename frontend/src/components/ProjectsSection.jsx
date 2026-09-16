@@ -152,15 +152,14 @@ const ProjectsSection = () => {
 
           // Mark GitHub projects with source and filter out unwanted ones
           const excludedProjects = [
+            'DecodeLabs-Internship',
             'react-optimization-bootcamp',
             'codsoft',
             'ppe_webapp_system',
             'ppe-webapp-system',
             'portfolio-website',
             'portfolio',
-            'tehreemirfan123',
-            'DecodeLabs-Internship',
-            'DecodeLabs-Internship'
+            'tehreemirfan123'
           ];
 
           // Helper function to normalize names for comparison (removes spaces, hyphens, underscores)
